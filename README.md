@@ -9,9 +9,9 @@ Simple, Flexible and customizable data tables for React.
 
 ## Quick Features
 
- - Simple API
- - Easy way to pass data, manipulate, handle events & customize 
- - Responsive, it can fit to any size
+- Simple API
+- Easy way to pass data, manipulate, handle events & customize 
+- Responsive, it can fit to any size
 - Search
 - Sorting
 - Pagination
