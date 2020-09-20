@@ -1,7 +1,7 @@
 
 # Reactablex
 
-[![license](https://img.shields.io/github/license/elis-k/reactablex)](https://github.com/elis-k/reactablex/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/elis-k/reactablex)](https://github.com/elis-k/reactablex/blob/master/LICENSE) 
 [![npm](https://img.shields.io/npm/v/reactablex)](https://www.npmjs.com/package/reactablex)
 [![npm](https://img.shields.io/npm/dw/reactablex)](https://www.npmjs.com/package/reactablex)
 
