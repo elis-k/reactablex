@@ -1,0 +1,38 @@
+{
+      "name": "reactablex",
+      "version": "1.0.1",
+      "description": "Simple, Flexible React Tables",
+      "main": "./lib/reactable.js",
+      "scripts": {
+            "build": "webpack"
+      },
+      "keywords": [
+            "react",
+            "table",
+            "datatable"
+      ],
+      "peerDependencies": {
+            "prop-types": "^15.6.0",
+            "react": "^16.0.0",
+            "react-dom": "^16.0.0",
+            "simplebar-react": "^2.2.1"
+      },
+      "devDependencies": {
+            "@babel/preset-env": "^7.11.5",
+            "@babel/preset-react": "^7.10.4",
+            "babel-core": "^6.26.3",
+            "babel-loader": "^8.1.0",
+            "babel-preset-env": "^1.6.1",
+            "babel-preset-react": "^6.16.0",
+            "babel-preset-stage-0": "^6.24.1",
+            "css-loader": "^4.3.0",
+            "path": "^0.12.7",
+            "prop-types": "^15.6.0",
+            "react": "^16.0.0",
+            "react-dom": "^16.0.0",
+            "webpack": "^4.44.2",
+            "webpack-cli": "^3.3.12"
+      },
+      "author": "elis",
+      "license": "MIT"
+}
