@@ -580,7 +580,7 @@ export class Table extends React.Component {
 				
 		}();
 		
-        return <table className={'reactablex' + ((props.className) ? (' ' + props.className) : '')} {...props}>
+        return <table  {...props} className={'reactablex' + ((props.className) ? (' ' + props.className) : '')}>
             {tableHeader}
             <tbody ref={instnace => this.tbodyRef = instnace} style={{ maxHeight: maxHeight }} className="reactable-data" key="tbody">
 				{ (this.props.scrollable) ? scrollBody : tableChildren }

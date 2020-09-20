@@ -11,6 +11,7 @@ Simple, Flexible and customizable data tables for React.
 
  - Simple API
  - Easy way to pass data, manipulate, handle events & customize 
+ - Responsive, it can fit to any size
 - Search
 - Sorting
 - Pagination
@@ -27,11 +28,17 @@ npm install reactablex
 
 ## Usage
 
+**A good example:**
+
+[![Edit exciting-babbage-jhiyj](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/exciting-babbage-jhiyj?fontsize=14&hidenavigation=1&theme=dark)
+
+
  **The most simple example:**
 
 ```jsx
 
 import { Table } from "reactablex";
+import "reactablex/lib/style.css";
 
 ReactDOM.render(
     <Table data={[
@@ -48,9 +55,6 @@ While pretty basic, some people might need just this, some things you can notice
 - The columns can be parsed from data if not specified.
 - The data array objects can be in any order, and you can omit any you like
 
-**A good example:**
-
-Check it out on [Codesandbox](#)
 
 
 
@@ -161,6 +165,8 @@ ReactDOM.render(
 	noDataText="No users found." 
 	sortable={['username','timestamp']}
 	searchable={['username']}
+	findcolumns
+	scrollable='500px'
  />
 ```
 
@@ -184,17 +190,21 @@ object:
 **Searching**
 - To enable searching  specify `searchable` prop with an array of column keys that can be searched.
 
+**Scrolling**
+- To enable scrolling  specify `scrollable` prop with a string of max-height, i.e `scrollable='500px'` , and you should install the [SimpleBar](https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-react) dependency.
+
+
 **Empty Data**
 - Use `noDataText` prop to set the text to show when no entries are found .
 
 
-**Events**
+**More Events**
 
  - `onSort`  Called when the sorting in the table changes. This handler
    will be passed an object that contains the column name that is being
    sorted by, and the direction it is being sorted.
    
- -  `onFilter` Called every time the filtering changes. This handler will
+ -  `onSearch` Called every time the filtering changes. This handler will
    be passed a string containing the text that's being used for
    filtering.
    

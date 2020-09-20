@@ -48,6 +48,7 @@ module.exports = {
 			},
 			{
 				test: /\.css$/i,
+				exclude: path.resolve(__dirname, 'node_modules'),
 				use: ['style-loader', 'css-loader'],
 			},
 		]
