@@ -8,12 +8,6 @@ import { Tr } from './tr';
 import { Tfoot } from './tfoot';
 import { Paginator } from './paginator';
 
-//Optional Scrolling Library
-SimpleBarReact = false;
-try {
-    SimpleBarReact = require('simplebar-react');
-} catch (e) {}
-
 
 
 export class Table extends React.Component {
@@ -148,16 +142,16 @@ export class Table extends React.Component {
     }
 
     initializeFilters(props) {
-        this._filterable = {};
-        // Transform filterable properties into a more friendly list
-        for (let i in props.filterable) {
-            let column = props.filterable[i];
+        this._searchable = {};
+        // Transform searchable properties into a more friendly list
+        for (let i in props.searchable) {
+            let column = props.searchable[i];
             let columnName, filterFunction;
 	
 			columnName = typeof(column) == 'string' ? column : (column.column || column.key);
 			filterFunction = typeof(column.filterFunction) == 'function' ? column.filterFunction : 'default';
 			
-			this._filterable[columnName] = filterFunction;
+			this._searchable[columnName] = filterFunction;
         }
     }
 
@@ -262,17 +256,17 @@ export class Table extends React.Component {
         for (let i = 0; i < children.length; i++) {
             let data = children[i].props.data;
 
-            for (let filterColumn in this._filterable) {
+            for (let filterColumn in this._searchable) {
                 if (typeof(data[filterColumn]) !== 'undefined') {
                     // Default filter
-                    if (typeof(this._filterable[filterColumn]) === 'undefined' || this._filterable[filterColumn]=== 'default') {
+                    if (typeof(this._searchable[filterColumn]) === 'undefined' || this._searchable[filterColumn]=== 'default') {
                         if (extractDataFrom(data, filterColumn).toString().toLowerCase().indexOf(filter) > -1) {
                             matchedChildren.push(children[i]);
                             break;
                         }
                     } else {
                         // Apply custom filter
-                        if (this._filterable[filterColumn](extractDataFrom(data, filterColumn).toString(), filter)) {
+                        if (this._searchable[filterColumn](extractDataFrom(data, filterColumn).toString(), filter)) {
                             matchedChildren.push(children[i]);
                             break;
                         }
@@ -464,10 +458,11 @@ export class Table extends React.Component {
                     if (data.hasOwnProperty(k)) {
                         // Update the columns array with the data's keys if columns were not
                         // already specified
-                        if (userColumnsSpecified === false) {
+                        if (userColumnsSpecified === false || this.props.findcolumns) {
                             let column = {
                                 key:   k,
-                                label: k
+                                label: k,
+								
                             };
 
                             // Only add a new column if it doesn't already exist in the columns array
@@ -505,9 +500,9 @@ export class Table extends React.Component {
         // Determine if we render the filter box
         let filtering = false;
         if (
-            this.props.filterable &&
-                Array.isArray(this.props.filterable) &&
-                    this.props.filterable.length > 0 &&
+            this.props.searchable &&
+                Array.isArray(this.props.searchable) &&
+                    this.props.searchable.length > 0 &&
                         !this.props.hideFilterInput
         ) {
             filtering = true;
@@ -556,8 +551,8 @@ export class Table extends React.Component {
 					   itemsPerPage={this.state.itemsPerPage}
                        onFilter={filter => {
                      this.setState({ filter: filter });
-                     if (this.props.onFilter) {
-                        this.props.onFilter(filter)
+                     if (this.props.onSearch) {
+                        this.props.onSearch(filter)
                      }
                  }}
                        filterPlaceholder={this.props.filterPlaceholder}
@@ -570,16 +565,25 @@ export class Table extends React.Component {
             )
         }
 		var tableChildren = currentChildren.length > 0 ? currentChildren : noDataText;
+		var maxHeight = (typeof this.props.scrollable == "string") ? this.props.scrollable : "initial";
 		
-        return <table className={'react-datatable' + ((props.className) ? (' ' + props.className) : '')} {...props}>
-            {tableHeader}
-            <tbody ref={instnace => this.tbodyRef = instnace} className="reactable-data" key="tbody">
-				{if (SimpleBarReact && this.props.scroll) ?
-				<SimpleBarReact style={{ maxHeight: 'inherit' }}>
+		var scrollBody = function(){
+			try{
+				var SimpleBar = require('simplebar-react').default;
+				return(
+				<SimpleBar style={{ maxHeight: 'inherit' }}>
 					{tableChildren}
-				</SimpleBarReact>
-				: tableChildren; } 
+				</SimpleBar>)
+			}
+			catch(err){}
+			return tableChildren;
 				
+		}();
+		
+        return <table className={'reactablex' + ((props.className) ? (' ' + props.className) : '')} {...props}>
+            {tableHeader}
+            <tbody ref={instnace => this.tbodyRef = instnace} style={{ maxHeight: maxHeight }} className="reactable-data" key="tbody">
+				{ (this.props.scrollable) ? scrollBody : tableChildren }
             </tbody>
             {pagination === true ?
              <Paginator colSpan={columns.length}
@@ -587,6 +591,7 @@ export class Table extends React.Component {
                  numPages={numPages}
                  currentPage={currentPage}
 				 itemsPerPage={this.state.itemsPerPage}
+				 currentChildren={currentChildren.length}
 				 totalItems={filteredChildren.length}
                  onPageChange={page => {
                      this.setState({ currentPage: page });

@@ -64,16 +64,16 @@ export class Paginator extends React.Component {
         }
 
         let pageButtons = [];
-        let pageButtonLimit = this.props.pageButtonLimit;
-        let currentPage = this.props.currentPage;
-        let numPages = this.props.numPages;
+        
+		let {itemsPerPage, totalItems,currentChildren,pageButtonLimit, currentPage, numPages} = this.props;
         let lowerHalf = Math.round( pageButtonLimit / 2 );
         let upperHalf = (pageButtonLimit - lowerHalf);
 
-		let {itemsPerPage, totalItems} = this.props;
 		
-		var currentPageEnd = (currentPage * itemsPerPage);
-		var currentPageStart = (currentPageEnd - itemsPerPage + 1 );
+		
+		var currentPageEnd = (((currentPage + 1) * itemsPerPage) - itemsPerPage + currentChildren);
+		var currentPageStart = (currentPageEnd - currentChildren + 1 );
+		var showingInfo = (itemsPerPage == 0) ? `Showing ${totalItems} entries` :  (totalItems == 0 ? '' : `Showing ${currentPageStart} to ${currentPageEnd} of ${totalItems} entries`);
 		
 	
         for (let i = 0; i < this.props.numPages; i++) {
@@ -106,7 +106,7 @@ export class Paginator extends React.Component {
                     <td colSpan={this.props.colSpan}>
 						<div className="pagination-container">
 							<div className="pagination-info">
-								<span>Showing {currentPageStart} to {currentPageEnd} of {totalItems} entries</span>
+								<span>{showingInfo}</span>
 							</div>
 							<div className="pagination-buttons">
 								{this.renderPrevious()}

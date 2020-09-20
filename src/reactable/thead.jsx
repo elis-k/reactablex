@@ -157,26 +157,28 @@ export class Thead extends React.Component {
 
         return (
             <thead {...props}>
-                {this.props.filtering === true ?
+                
                 <tr className="reactable-filterer">
 						<td colSpan={this.props.columns.length}>
 							<div className="reactable-head-block">
 								{showPages}
 								<div className="reactable-head-block-left">
-									<Filterer
-										colSpan={this.props.columns.length}
-										onFilter={this.props.onFilter}
-										placeholder={this.props.filterPlaceholder}
-										value={this.props.currentFilter}
-										className={this.props.filterClassName}
-									/>
+									{this.props.filtering === true ?
+										<Filterer
+											colSpan={this.props.columns.length}
+											onFilter={this.props.onFilter}
+											placeholder={this.props.filterPlaceholder}
+											value={this.props.currentFilter}
+											className={this.props.filterClassName}
+										/>
+									: null}
 									{actions}
 								</div>
 							</div>
 						</td>
 					
 				</tr>
-				: null}
+
                 <tr {...extraRowProps} className="reactable-column-header">{Ths}</tr>
             </thead>
         );
