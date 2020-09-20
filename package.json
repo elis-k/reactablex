@@ -1,6 +1,6 @@
 {
       "name": "reactablex",
-      "version": "1.0.4",
+      "version": "1.0.5",
       "description": "Simple, Flexible React Tables",
       "main": "./lib/reactable.js",
       "scripts": {
