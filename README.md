@@ -215,3 +215,5 @@ object:
 - Just add the prop `findcolumns` to parse the column labels & keys from the data object.
 
 By default the columns will not be parsed if you have specified a column array. This option might be useful in case you want to customize a column and just parse the rest of column labels from data.
+
+*Note*: This library is based on the [Reactable](https://github.com/glittershark/reactable) library.
